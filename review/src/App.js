@@ -1,42 +1,44 @@
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import data from './data';
+const PersonContext = createContext();
 
 import './styles.scss';
 
 const App = ()=> {
     const [person, setPerson] = useState(data);
-    return(<div className="App component">
-        <h1>Main App</h1>
-        <SubComponent1 person={person} setPerson={setPerson} />
-    </div>);
+    return(
+        <div className="App component">
+            <PersonContext.Provider value={[person, setPerson]}>
+                <h1>Main App</h1>
+                <SubComponent1 person={person} setPerson={setPerson} />
+            </PersonContext.Provider>
+        </div>);
 };
 
-const SubComponent1 = (props) => {
-    const { person, setPerson } = props;
-
+const SubComponent1 = () => {
     return(
         <div className="component">
             <h1>SubComponent 1</h1>
-            <SubComponent2 person={person} setPerson={setPerson} />
+            <SubComponent2/>
         </div>
     );
 }
 
-const SubComponent2 = (props) => {
-    const { person, setPerson } = props;
+const SubComponent2 = () => {
+    const [person] = useContext(PersonContext);
 
     return(
         <div className="component">
             <h1>SubComponent 2</h1>
             <h3>Name: {person.name.title} {person.name.first} {person.name.last}</h3>
-            <SubComponent3 person={person} setPerson={setPerson} />
+            <SubComponent3 />
         </div>
     );
 }
 
-const SubComponent3 = (props) => {
-    const { person, setPerson } = props;
+const SubComponent3 = () => {
+    const [person, setPerson] = useContext(PersonContext);
 
     const changeLocation = () => {
         setPerson({
