@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
+
+import { reducer, setName, setLocation } from './reducer';
 
 import data from './data';
 const PersonContext = createContext();
@@ -6,12 +8,13 @@ const PersonContext = createContext();
 import './styles.scss';
 
 const App = ()=> {
-    const [person, setPerson] = useState(data);
+    const [person, dispatch] = useReducer(reducer, data);
+
     return(
         <div className="App component">
-            <PersonContext.Provider value={[person, setPerson]}>
+            <PersonContext.Provider value={[person, setName, setLocation, dispatch]}>
                 <h1>Main App</h1>
-                <SubComponent1 person={person} setPerson={setPerson} />
+                <SubComponent1 />
             </PersonContext.Provider>
         </div>);
 };
@@ -27,7 +30,7 @@ const SubComponent1 = () => {
 
 const SubComponent2 = () => {
     const [person] = useContext(PersonContext);
-
+    
     return(
         <div className="component">
             <h1>SubComponent 2</h1>
@@ -38,28 +41,14 @@ const SubComponent2 = () => {
 }
 
 const SubComponent3 = () => {
-    const [person, setPerson] = useContext(PersonContext);
+    const [person, setPerson, setLocation, dispatch] = useContext(PersonContext);
 
     const changeLocation = () => {
-        setPerson({
-            ...person,
-            location: {
-                street: "222 N 22 Street",
-                city: "Philadelphia",
-                state: "PA"
-            }
-        });
+        dispatch(setLocation("222 N 22 Street","Philadelphia","PA"));
     }
 
     const changeName = () => {
-        setPerson({
-            ...person,
-            name: {
-                title: "Mr",
-                first: "Warren",
-                last: "Longmire"
-            }
-        });
+        dispatch(setName("Mr","Warren","Longmire"));
     }
 
     return(
