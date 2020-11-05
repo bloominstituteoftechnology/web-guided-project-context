@@ -30,7 +30,7 @@ const SubComponent1 = () => {
 
 const SubComponent2 = () => {
     const [person] = useContext(PersonContext);
-    
+
     return(
         <div className="component">
             <h1>SubComponent 2</h1>
