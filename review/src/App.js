@@ -10,14 +10,14 @@ const App = ()=> {
 const SubComp1 = ()=> {
     return(<div className="component">
         <h1>Sub Comp 1</h1>
-        <SubCom2 />
+        <SubComp2 />
     </div>);
 }
 
 const SubComp2 = ()=> {
     return(<div className="component">
         <h1>Sub Comp 2</h1>
-        <SubCom3 />
+        <SubComp3 />
     </div>);
 }
 
