@@ -1,3 +1,5 @@
+import data from './data';
+
 export const SET_NAME = "SET_NAME";
 export const SET_LOCATION = "SET_LOCATION";
 
@@ -7,6 +9,10 @@ export const setName = (title, first, last) => {
 
 export const setLocation = (street, city, state) => {
     return({type:SET_LOCATION, payload:{street, city, state}});
+}
+
+export const initialState = {
+    person:data
 }
 
 export const reducer = (state, action)=>{
