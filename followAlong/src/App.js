@@ -13,14 +13,14 @@ export default function App() {
     <div className="App">
       <section className="header">
         <h1>Family Trees</h1>
-        {families.map(d => (
+        {families.map(family => (
           <button
-            className={`family-button ${d.familyName ===
+            className={`family-button ${family.familyName ===
               activeFamily.familyName && "active"}`}
-            key={d.familyName}
-            onClick={() => setActiveFamily(d)}
+            key={family.familyName}
+            onClick={() => setActiveFamily(family)}
           >
-            {d.familyName}
+            {family.familyName}
           </button>
         ))}
       </section>

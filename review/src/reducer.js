@@ -3,17 +3,15 @@ import data from './data';
 export const SET_NAME = "SET_NAME";
 export const SET_LOCATION = "SET_LOCATION";
 
-export const setName = (title, first, last) => {
-    return({type:SET_NAME, payload:{title, first, last}});
+export const setName = (name) => {
+    return({type:SET_NAME, payload:name});
 }
 
-export const setLocation = (street, city, state) => {
-    return({type:SET_LOCATION, payload:{street, city, state}});
+export const setLocation = (location) => {
+    return({type:SET_LOCATION, payload:location});
 }
 
-export const initialState = {
-    person:data
-}
+export const initialState = data;
 
 export const reducer = (state, action)=>{
     switch(action.type) {
