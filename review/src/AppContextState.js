@@ -1,17 +1,25 @@
-import React, {useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import data from './data';
+
+//createContext() - creates the context object, holds state to be shared within group of components.
+//useContext() - lets us access the data within the context object.
+
+const PersonContext = createContext();
 
 const App = () => {
     const [ person, setPerson ] = useState(data);
-    console.log("person data:", person)
 
     return(<div className="App component">
-        <h1>Main App</h1>
-        <SubComp1 person={person} setPerson={setPerson}/>
+        <PersonContext.Provider value={{person, setPerson}}>
+            <h1>Main App</h1>
+            <SubComp1 />
+        </PersonContext.Provider>
     </div>);
 };
 
-const SubComp1 = ({person, setPerson}) => {
+const SubComp1 = () => {
+    const { person, setPerson } = useContext(PersonContext);
+    console.log("person from context:", person)
     const handleChange = () => {
         setPerson({
             ...person,
@@ -28,21 +36,22 @@ const SubComp1 = ({person, setPerson}) => {
             <h1>Sub Comp 1</h1>
             <h2>{person.name.title} {person.name.first} {person.name.last}</h2>
             <button onClick={handleChange}>Change Location</button>
-            <SubComp2 person={person} setPerson={setPerson} />
+            <SubComp2  />
         </div>
     )
 }
 
-const SubComp2 = ({person, setPerson}) => {
+const SubComp2 = () => {
     return(
         <div className="component">
             <h1>Sub Comp 2</h1>
-            <SubComp3 person={person} setPerson={setPerson} />
+            <SubComp3  />
         </div>
     )
 }
 
-const SubComp3 = ({person, setPerson}) => {
+const SubComp3 = () => {
+    const { person, setPerson } = useContext(PersonContext);
     const handleClick = () => {
         setPerson({
             ...person,
