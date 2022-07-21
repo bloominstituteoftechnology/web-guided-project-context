@@ -1,5 +1,8 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 import data from './data';
+
+import { reducer, initialState } from './reducer';
+import { setName, setLocation } from './reducer';
 
 //createContext() - creates the context object, holds state to be shared within group of components.
 //useContext() - lets us access the data within the context object.
@@ -7,10 +10,10 @@ import data from './data';
 const PersonContext = createContext();
 
 const App = () => {
-    const [ person, setPerson ] = useState(data);
+    const [ person, dispatch ] = useReducer(reducer, initialState);
 
     return(<div className="App component">
-        <PersonContext.Provider value={{person, setPerson}}>
+        <PersonContext.Provider value={{person, dispatch}}>
             <h1>Main App</h1>
             <SubComp1 />
         </PersonContext.Provider>
@@ -18,18 +21,15 @@ const App = () => {
 };
 
 const SubComp1 = () => {
-    const { person, setPerson } = useContext(PersonContext);
+    const { person, dispatch } = useContext(PersonContext);
     console.log("person from context:", person)
     const handleChange = () => {
-        setPerson({
-            ...person,
-            location: {
+            dispatch(setLocation({
                 city: "new york",
                 postcode: 11225,
                 state: "NY",
                 street: "some main street"
-            }
-        })
+            })) 
     }
     return(
         <div className="component">
@@ -51,16 +51,13 @@ const SubComp2 = () => {
 }
 
 const SubComp3 = () => {
-    const { person, setPerson } = useContext(PersonContext);
+    const { person, dispatch } = useContext(PersonContext);
     const handleClick = () => {
-        setPerson({
-            ...person,
-            name: {
-                title: "Mr",
-                first: "John",
-                last: "Doe"
-            }
-        })
+        dispatch(setName({
+            title: "Mr",
+            first: "John",
+            last: "Doe"
+        }))
     }
     return(
         <div className="component">
